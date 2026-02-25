@@ -11,7 +11,7 @@ import org.springframework.kafka.config.KafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
-import org.springframework.kafka.support.serializer.JsonDeserializer;
+import org.springframework.kafka.support.serializer.JacksonJsonDeserializer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,13 +45,13 @@ public class KafkaConfiguration {
         configProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         configProps.put(ConsumerConfig.GROUP_ID_CONFIG, "exercise-object-group-id");
         configProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+        configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JacksonJsonDeserializer.class);
+        configProps.put(JacksonJsonDeserializer.TRUSTED_PACKAGES, "*");
 
-        JsonDeserializer<NewOrder> jsonDeserializer =  new JsonDeserializer<>(NewOrder.class);
-        jsonDeserializer.addTrustedPackages("it.js.commons.*");
-        jsonDeserializer.ignoreTypeHeaders();
+        JacksonJsonDeserializer<NewOrder> deserializer = new JacksonJsonDeserializer<>(NewOrder.class);
+        deserializer.configure(configProps, false);
 
-        return new DefaultKafkaConsumerFactory<>(configProps, new StringDeserializer(), jsonDeserializer);
+        return new DefaultKafkaConsumerFactory<>(configProps, new StringDeserializer(), deserializer);
     }
 
     @Bean

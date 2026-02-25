@@ -1,4 +1,4 @@
-package it.js.spring_kafka_producer.model;
+package it.js.springkafkaproducer.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
