@@ -1,0 +1,44 @@
+Installare il server su linux:
+
+https://kafka.apache.org/quickstart
+
+esempio di installazione su Ubuntu 24:
+https://www.cherryservers.com/blog/install-apache-kafka-ubuntu
+
+sito kafka:
+https://kafka.apache.org/
+
+Per configurare:
+
+comandi eseguiti dalla directory /opt/kafka
+./bin/kafka-server-start.sh ./config/server.properties
+
+PER LANCIARE IL SERVER:
+./bin/kafka-server-start.sh ./config/server.properties
+PER STOPPARE:
+premere ctrl C
+
+
+ELENCARE I TOPIC ATTIVI SUL SERVER
+./bin/kafka-topics.sh --list --bootstrap-server localhost:9092
+
+CREARE UN TOPIC SUL SERVER di nome "new-orders"
+sudo /opt/kafka/bin/kafka-topics.sh --create --topic new-orders --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+
+CANCELLARE UN TOPIC
+./bin/kafka-topics.sh --delete --topic new-orders --bootstrap-server localhost:9092
+
+CANCELLARE TUTTI I TOPIC
+./bin/kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic '.*'
+
+CREARE UN PRODUCER
+sudo /opt/kafka/bin/kafka-console-producer.sh --topic new-orders --bootstrap-server localhost:9092
+
+ESEGUIRE IL PRODUCER
+sudo /opt/kafka/bin/kafka-console-consumer.sh --topic new-orders --from-beginning --bootstrap-server localhost:9092
+
+CREARE UN CONSUMER IN ASCOLTO SUL TOPIC "new-orders"
+sudo /opt/bin/kafka-console-consumer.sh --topic new-orders --bootstrap-server localhost:9092
+
+LANCIARE UN CONSUMER IN ASCOLTO SU UN TOPIC
+sudo /opt/bin/kafka-console-consumer.sh --topic new-orders --from-beginning --bootstrap-server localhost:9092
