@@ -1,6 +1,7 @@
 package it.js.springkafkaproducer.service;
 
 import it.js.commons.dto.NewOrder;
+import it.js.springkafkaproducer.model.as.ASResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -11,10 +12,10 @@ import org.springframework.stereotype.Service;
 public class KafkaProducer {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
-    private final KafkaTemplate<String, NewOrder> newOrderkafkaTemplate;
+    private final KafkaTemplate<String, ASResponse> newOrderkafkaTemplate;
 
     public KafkaProducer(@Qualifier("stringKafkaTemplate") KafkaTemplate<String, String> kafkaTemplate,
-                         @Qualifier("newOrderKafkaTemplate") KafkaTemplate<String, NewOrder> newOrderkafkaTemplate) {
+                         @Qualifier("newOrderKafkaTemplate") KafkaTemplate<String, ASResponse> newOrderkafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
         this.newOrderkafkaTemplate = newOrderkafkaTemplate;
     }
@@ -26,11 +27,10 @@ public class KafkaProducer {
         log.info("sent: {}", order);
     }
 
-    public void sendObject(NewOrder newOrder) {
-        String topic = "new-object-orders";
-        newOrderkafkaTemplate.send(topic, newOrder);
+    public void sendObject(String topic, ASResponse asResponse) {
+        newOrderkafkaTemplate.send(topic, asResponse);
 
-        log.info("sent object: {}", newOrder);
+        log.info("sent object: {}", asResponse);
 
     }
 }

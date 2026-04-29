@@ -1,6 +1,8 @@
 package it.js.springkafkaproducer.config;
 
+import com.fasterxml.jackson.databind.JsonSerializer;
 import it.js.commons.dto.NewOrder;
+import it.js.springkafkaproducer.model.as.ASResponse;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.context.annotation.Bean;
@@ -27,7 +29,7 @@ public class KafkaConfiguration {
     }
 
     @Bean
-    public ProducerFactory<String, NewOrder> objectProducerFactory() {
+    public ProducerFactory<String, ASResponse> objectProducerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -42,7 +44,7 @@ public class KafkaConfiguration {
     }
 
     @Bean(name = "newOrderKafkaTemplate")
-    public KafkaTemplate<String, NewOrder> newOrderKafkaTemplate() {
+    public KafkaTemplate<String, ASResponse> newOrderKafkaTemplate() {
         return new KafkaTemplate<>(objectProducerFactory());
     }
 }

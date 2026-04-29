@@ -6,13 +6,17 @@ installazione kafka 4: https://www.youtube.com/watch?v=lO7OMXPldnk
 sito kafka:
 https://kafka.apache.org/
 
-Per configurare:
+Per configurare da CMD:
 1 -
-set KAFKA_CLUSTER_ID=(.\bin\windows\kafka-storage.bat random-uuid)
+FOR /F %i IN ('.\bin\windows\kafka-storage.bat random-uuid') DO SET KAFKA_CLUSTER_ID=%i
+            -> powershel  -> set KAFKA_CLUSTER_ID=(.\bin\windows\kafka-storage.bat random-uuid)
+2 -
+.\bin\windows\kafka-storage.bat format --standalone -t %KAFKA_CLUSTER_ID% -c  .\config\server.properties
+
 oppure
 set KAFKA_CLUSTER_ID="jacopo-kafka4"
 2 -
-.\bin\windows\kafka-storage.bat format --standalone -t jacopo-kafka4 -c  .\config\server.properties
+.\bin\windows\kafka-storage.bat format --standalone -t KAFKA_CLUSTER_ID -c  .\config\server.properties
 3 -
 cancellare e inserire nel punto indicato, tutta la IF ["%KAFKA_HEAP_OPTS%"] EQU [""],  questa riga di comando nel file kafka-server-start.bat
 
